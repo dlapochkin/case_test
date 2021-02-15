@@ -1,7 +1,7 @@
 """
 Case-study #4 Анализ текста
 Разработчики:
-
+Кривошапова 20%
 """
 
 from textblob import TextBlob
