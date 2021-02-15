@@ -1,6 +1,13 @@
+"""
+Case-study #4 Анализ текста
+Разработчики:
+
+"""
+
 from textblob import TextBlob
 
-text = input()
+text = input('Введите текст: ')
+blob = TextBlob(text)
 syllables = 0
 sentence = 0
 fre = 0
@@ -12,19 +19,31 @@ print('Предложений:', sentence)
 
 print('Слов:', text.count(' ') + 1)
 
-if ord(text[0]) < 122:
-    syllables = sum(1 for x in text.lower() if x in 'aeiou')
-else:
+if blob.detect_language() == 'ru':
     syllables = sum(1 for x in text.lower() if x in 'уеоаыяиюэ')
+else:
+    syllables = sum(1 for x in text.lower() if x in 'aeiouy')
+asl = (text.count(' ') + 1) / sentence
+asw = syllables / (text.count(' ') + 1)
 print('Слогов:', syllables)
-print('Средняя длина предложения в словах:', (text.count(' ') + 1) / sentence)
-print('Средняя длина слова в слогах:', syllables / (text.count(' ') + 1))
-if ord(text[0]) < 122:
-    fre = 206.835 - (1.3 * asl) - (60.1 * asw)
+print('Средняя длина предложения в словах:', asl)
+print('Средняя длина слова в слогах:', asw)
+
+if blob.detect_language() == 'ru':
+    fre = 206.835 - (1.3 * (asl)) - (60.1 * asw)
 else:
     fre = 206.835 - (1.015 * asl) - (84.6 * asw)
 print('Индекс удобочитаемости Флеша:', fre)
-blob = TextBlob(text)
+
+if fre > 80:
+    print('Текст очень легко читается (для младших школьников).')
+elif fre > 50:
+    print('Простой текст (для школьников).')
+elif fre > 25:
+    print('Текст немного трудно читать (для студентов).')
+else:
+    print('Текст трудно читается (для выпускников ВУЗов).')
+
 if blob.detect_language() == 'ru':
     blob = blob.translate(to="en")
 if blob.sentiment.polarity > 0.33:
