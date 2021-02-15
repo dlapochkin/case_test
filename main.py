@@ -1,7 +1,9 @@
 """
 Case-study #4 Анализ текста
 Разработчики:
-Кривошапова 20%
+Кузнецов А.
+Кривошапова Д. 20%
+Лапочкин Д. 40%
 """
 
 from textblob import TextBlob
@@ -24,7 +26,7 @@ asl = (text.count(' ') + 1) / sentence
 asw = syllables / (text.count(' ') + 1)
 
 if blob.detect_language() == 'ru':
-    fre = 206.835 - (1.3 * (asl)) - (60.1 * asw)
+    fre = 206.835 - (1.3 * asl) - (60.1 * asw)
 else:
     fre = 206.835 - (1.015 * asl) - (84.6 * asw)
 
